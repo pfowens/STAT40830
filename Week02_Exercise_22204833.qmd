@@ -83,7 +83,7 @@ plot(co2[1:36],
      ylab = expression(Atmospheric~concentration~of~CO[2]),
      las = 2, 
      type = "b",
-     col="red")
+     col="green")
 title(main = expression(24~month~Mauna~Loa~CO[2]~trend)) #add plot title
 grid(NULL, NULL, lwd = 1) # grids aligned with tick marks
 ```
