@@ -1,0 +1,91 @@
+---
+title: "STAT40830-Adv Data Prog with R"
+author: "Paul Owens"
+date: today
+date-format: long
+format:
+  html:
+    code-fold: true
+    code-tools: true
+    code-line-numbers: true
+    fontsize: 1.2em
+    toc: true
+    toc-title: '**Contents**'
+    embed-resources: true
+    grid:
+      body-width: 800px
+    theme: 
+      - sketchy
+execute: 
+  eval: true
+  echo: false
+---
+ 
+
+------------------------------------------------------------------------
+
+# [Week 02 Quarto Exercise]{style="color: darkred;"}
+
+------------------------------------------------------------------------
+
+## [Data set]{style="color: darkblue;"}
+
+```{r}
+#| label: load-dataset
+require(graphics)
+minval=min(co2)
+maxval=max(co2)
+```
+
+
+
+This data set is a record of monthly average in-situ atmospheric concentrations of CO$_{2}$ measurements taken at Mauna Loa Hawaii, the largest active volcano in the world. The 468 observations expressed in parts per million (ppm) from January 1959 to December 1997 are included in this report. Detailed information regarding this data as well as links to more data are available here: <https://scrippsco2.ucsd.edu/data/atmospheric_co2/>
+
+* The lowest recorded value was `r minval` ppm and was recorded in month `r which(co2==minval)%%12` of `r 1959 + (which(co2==minval)-1)%/%12 `.
+
+* The highest recorded value was `r maxval` ppm and was recorded in month `r which(co2==maxval)%%12` of `r 1959 + (which(co2==maxval)-1)%/%12 `.
+
+## [Motivation]{style="color: darkblue;"}
+
+> To understanding the significance of this data it is critical to understand that the CO$_{2}$ ***is not coming from the volcano*** itself. 
+
+Though the volcano does produce some CO$_{2}$ along with H$_{2}$O and SO$_{2}$, the measurement location is upwind of the vent so is not affected by these emissions. This site was chosen as it is far from population centres and is almost barren of vegetation, so the CO$_2$ measurements can be treated as purely the general atmospheric levels.
+
+## [Time Series Plot]{style="color: darkblue;"}
+
+```{r}
+#| label: plot-timeseries
+#| fig-align: center
+plot(co2, 
+     xlab = "Measurement Time",
+     ylab = expression(Atmospheric~concentration~of~CO[2]),
+     las = 2, 
+     col="purple")
+title(main = expression(Mauna~Loa~CO[2]~trend)) #add plot title
+grid(NULL, NULL, lwd = 1) # grids aligned with tick marks
+```
+
+Plotting the measurements shows 2 interesting aspect of the data: 
+
+1. There is a clear trend upwards in the concentration of CO$_{2}$ detected above the volcano, increasing from sub 320ppm in the early 1960's up to greater than 360ppm in the late 1990's indicating that the amount of C0$_{2}$ has demonstrably increased over these ~40 years. 
+
+2. There is a cyclical variation in the concentration that appears to show a repeatable annual variation of the concentration.
+
+## [Cyclical Signal]{style="color: darkblue;"}
+
+Plotting in the first 36 months data shows that the cycle is annual and that May has the highest annual atmospheric CO$_{2}$ concentration and October has the lowest.
+
+```{r}
+#| label: plot-cyclical
+#| fig-align: center
+plot(co2[1:36], 
+     xlab = "Measurement Time",
+     ylab = expression(Atmospheric~concentration~of~CO[2]),
+     las = 2, 
+     type = "b",
+     col="red")
+title(main = expression(24~month~Mauna~Loa~CO[2]~trend)) #add plot title
+grid(NULL, NULL, lwd = 1) # grids aligned with tick marks
+```
+
+This cycle been shown to be driven by plant growth in the northern hemisphere. During the growth phase in the summer months the plants generally absorb CO$_{2}$ and conversely during the winter months die back causes CO$_{2}$ to be released back into the atmosphere.
