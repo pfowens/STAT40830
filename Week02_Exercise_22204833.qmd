@@ -1,6 +1,6 @@
 ---
 title: "STAT40830-Adv Data Prog with R"
-author: "Paul Owens"
+author: "Paul F Owens"
 date: today
 date-format: long
 format:
